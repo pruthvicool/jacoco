@@ -30,25 +30,6 @@ android {
 
 apply plugin: 'jacoco'
 
-task jacocoTestReport(type: JacocoReport, group: "my group", dependsOn: 'testDebugUnitTest') {
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
-    def mainSrc = "${project.projectDir}/src/main/java"
-    println "mainSrc" + mainSrc
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    println "before execution of Inner: " + "${buildDir}/jacoco/testDebugUnitTest.exec"
-    executionData = files("${buildDir}/jacoco/testDebugUnitTest.exec")
-    println "after execution of Inner: "
-
-}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
