@@ -1,4 +1,10 @@
+
+plugins {
+    id "com.vanniktech.android.junit.jacoco" version "0.12.0"
+}
+
 apply plugin: 'com.android.library'
+
 
 android {
     compileSdkVersion 26
@@ -28,41 +34,10 @@ android {
 
 }
 
-apply plugin: 'jacoco'
-
-task MyJacocoAggregator(type: JacocoReport, group: "my group",dependsOn: ['clean', 'testDebugUnitTest']) {
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    def debugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
-    def debugTreeOfInner = fileTree(dir: "C:\\Users\\E050010\\Projects\\DPT Designer Team\\Flame\\2.1\\workspace\\new_jacoco\\inner\\build/intermediates/classes/debug", excludes: fileFilter)
-
-    println "debugTree  " + debugTree
-    println "debugTreeOfInner " + debugTreeOfInner
-
-
-    def mainSrc = "${project.projectDir}/src/main/java"
-    def innerSrc = "C:\\Users\\E050010\\Projects\\DPT Designer Team\\Flame\\2.1\\workspace\\Jacoco\\inner/src/main/java"
-
-    println "mainSrc  " + mainSrc
-    println "innerSrc " + innerSrc
-
-    sourceDirectories = files([mainSrc,innerSrc])
-    classDirectories = files([debugTree, debugTreeOfInner])
-    println "before execution of Facade: "+ "${buildDir}/jacoco/testDebugUnitTest.exec"
-    executionData = files(["${buildDir}/jacoco/testDebugUnitTest.exec"])
-    println "after execution of Facade: "
-
-}
 
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation 'com.android.support:appcompat-v7:26.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
